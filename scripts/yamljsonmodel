@@ -5,6 +5,21 @@ from jinja2 import Environment, PackageLoader, select_autoescape
 
 import pprint
 
+def map_variables(variables):
+    
+    mapped_variables = {}
+    
+    for key, value in variables.items():
+
+        # Expand scalar value to a hash
+
+        if type(value) == str:
+            mapped_variables[key] = {"type": value}
+        else:
+            mapped_variables[key] = value
+            
+    return mapped_variables
+
 def generate_template(kind, variables):
     """Generate a JSONModel header from YAML configuration."""
 
@@ -14,8 +29,13 @@ def generate_template(kind, variables):
 
     template = env.get_template('%s/model.h' % kind)
 
-    pprint.pprint(variables)
-    print(template.render(**variables))
+    mapped_variables = variables.copy()
+    for key in ['properties', 'optional_properties']:
+        mapped_variables[key] = map_variables(variables[key])
+
+    pprint.pprint(mapped_variables)
+
+    print(template.render(**mapped_variables))
 
 def process_file(filename): 
     """Process a YAML file through the template engine."""
