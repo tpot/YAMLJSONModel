@@ -26,6 +26,7 @@ setup(
         "License :: OSI Approved :: Apache Software License",
     ],
 
+    setup_requires = ['nose >= 1.0'],
     install_requires = ['jinja2 >= 2.9', 'pyyaml'],
     
     packages = ['yamljsonmodel', 'tests'],
