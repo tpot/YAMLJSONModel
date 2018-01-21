@@ -3,8 +3,6 @@
 import sys, yaml
 from jinja2 import Environment, PackageLoader, select_autoescape
 
-import pprint
-
 def map_variables(variables):
     
     mapped_variables = {}
@@ -33,12 +31,11 @@ def generate_template(kind, variables):
     for key in ['properties', 'optional_properties']:
         mapped_variables[key] = map_variables(variables[key])
 
-    pprint.pprint(mapped_variables)
-
     print(template.render(**mapped_variables))
 
 def process_file(filename): 
     """Process a YAML file through the template engine."""
+
     with open(filename, 'r') as stream:
         y = yaml.load(stream)
         for obj in y:
