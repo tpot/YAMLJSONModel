@@ -21,12 +21,12 @@ def process_yaml_object(kind, obj):
     # Create template environment
     
     env = Environment(
-        loader = PackageLoader('yamljsonmodel', 'templates')
+        loader = PackageLoader('yamljsonmodel.JSONModelPlugin', 'templates')
     )
 
     # Generate model.h
 
-    template = env.get_template('%s/model.h' % kind)
+    template = env.get_template('model.h')
 
     mapped_variables = obj.copy()
     for key in ['properties', 'optional_properties']:
