@@ -9,9 +9,11 @@
 
 // Required properties
 
+{% if properties is defined -%}
 {% for property_name, values in properties.items() -%}
 @property (nonatomic) {{ values['type'] }} {{ property_name }};
-{% endfor %}
+{% endfor -%}
+{% endif %}
 // Optional properties
 
 {% if optional_properties is defined -%}

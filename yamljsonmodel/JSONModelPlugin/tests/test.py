@@ -58,4 +58,4 @@ class TestJSONModelPlugin(unittest.TestCase):
         def foo(s):
             self.assertIn("NSInteger <Optional> foo", s)
 
-            yamljsonmodel.process_yaml_document(y, lambda x: foo(x))
+        yamljsonmodel.process_yaml_document(y, lambda x: foo(x))
