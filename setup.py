@@ -35,7 +35,7 @@ setup(
     scripts = ['scripts/yamljsonmodel'],
     
     package_data = {
-        'yamljsonmodel': ['templates/*/*'],
+        'yamljsonmodel.JSONModelPlugin': ['templates/*'],
     },
 
     entry_points = {'yamljsonmodel.plugins': 'JSONModel = yamljsonmodel.JSONModelPlugin'},
