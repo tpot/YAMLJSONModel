@@ -16,5 +16,5 @@ if __name__ == '__main__':
             # Parse YAML and send objects in the document to appropriate plugin
 
             y = yaml.load(stream)
-            
-            yamljsonmodel.process_yaml_document(y)
+
+            yamljsonmodel.process_yaml_document(y, lambda x: sys.stdout.write(x))

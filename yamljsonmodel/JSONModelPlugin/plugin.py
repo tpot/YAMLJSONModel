@@ -32,4 +32,4 @@ def process_yaml_object(kind, obj):
     for key in ['properties', 'optional_properties']:
         mapped_variables[key] = map_variables(obj[key])
 
-    print(template.render(**mapped_variables))
+    return template.render(**mapped_variables)
