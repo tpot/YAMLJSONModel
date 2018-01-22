@@ -14,7 +14,9 @@
 {% endfor %}
 // Optional properties
 
+{% if optional_properties is defined -%}
 {% for property_name, values in optional_properties.items() -%}
 @property (nonatomic) {{ values['type'] }} <Optional> {{ property_name }};
-{% endfor %}
+{% endfor -%}
+{% endif %}
 @end

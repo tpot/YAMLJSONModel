@@ -29,7 +29,8 @@ setup(
     setup_requires = ['nose >= 1.0'],
     install_requires = ['jinja2 >= 2.9', 'pyyaml'],
     
-    packages = ['yamljsonmodel', 'yamljsonmodel.JSONModelPlugin', 'tests'],
+    packages = ['yamljsonmodel', 'yamljsonmodel.JSONModelPlugin',
+                'yamljsonmodel.JSONModelPlugin.tests', 'tests'],
     
     scripts = ['scripts/yamljsonmodel'],
     
