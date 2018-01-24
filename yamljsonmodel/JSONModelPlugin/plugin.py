@@ -1,19 +1,38 @@
 from jinja2 import Environment, PackageLoader
 
-def map_variables(variables):
-    
-    mapped_variables = {}
-    
-    for key, value in variables.items():
 
-        # Expand scalar value to a hash
+def make_template_vars(obj):
 
-        if type(value) == str:
-            mapped_variables[key] = {"type": value}
-        else:
-            mapped_variables[key] = value
+    vars = {}
+
+    # Required properties
+
+    for key in ['properties', 'optional_properties']:
+
+        optional = True
+        
+        if key == 'properties':
+            optional = False
             
-    return mapped_variables
+        if obj.has_key(key):
+
+            for name in obj[key].keys():
+
+                vars[key] = {}
+
+                # String value is shortcut for simple property
+                
+                if type(obj[key][name]) == str:
+                    vars[key][name] = {'type': obj[key][name]}
+                else:
+                    vars[key][name] = obj[key][name]
+
+                # Mark as optional
+                
+                if optional:
+                    vars[key][name]['protocols'] = ['Optional']
+
+    return vars        
 
 def process_yaml_object(kind, obj):
     """Generate JSONModel output from templates."""
@@ -28,9 +47,5 @@ def process_yaml_object(kind, obj):
 
     template = env.get_template('model.h')
 
-    mapped_variables = obj.copy()
-    for key in ['properties', 'optional_properties']:
-        if mapped_variables.has_key(key):
-            mapped_variables[key] = map_variables(obj[key])
-
-    return template.render(**mapped_variables)
+    template_vars = make_template_vars(obj)
+    return template.render(**template_vars)
