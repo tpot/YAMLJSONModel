@@ -1,6 +1,16 @@
 from jinja2 import Environment, PackageLoader
 
-
+def add_keymaps_for_properties(keypath, properties):
+    result = {}
+    for key in properties.keys():
+        if type(properties[key]) == dict:
+            result.update(add_keymaps_for_properties(keypath + [key], properties[key]))
+        else:
+            result[key] = {"type": properties[key],
+                           "keymap": ".".join(keypath + [key])}
+            
+    return result
+        
 def make_template_vars(obj):
 
     vars = {}
@@ -27,6 +37,12 @@ def make_template_vars(obj):
                 else:
                     vars[key][name] = obj[key][name]
 
+                # Hash value is nested properties
+
+                if type(obj[key][name]) == dict:
+                    nested = add_keymaps_for_properties([name], obj[key][name])
+                    vars[key].update(nested)
+                    
                 # Mark as optional
                 
                 if optional:

@@ -59,3 +59,23 @@ class TestJSONModelPlugin(unittest.TestCase):
             self.assertIn("NSInteger <Optional> foo", s)
 
         yamljsonmodel.process_yaml_document(y, lambda x: foo(x))
+
+    def testNestedProperties(self):
+        """Test JSONModel nested properties behind a keymap"""
+        doc = '''
+---
+- kind: JSONModel
+  name: test
+  properties:
+    auth:
+      identity:
+        username: NSString *
+        password: NSString *
+'''
+        y = yaml.load(doc)
+
+        def foo(s):
+            self.assertIn("NSString * username", s)
+            self.assertIn("NSString * password", s)
+
+        yamljsonmodel.process_yaml_document(y, lambda x: foo(x))
