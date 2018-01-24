@@ -84,12 +84,11 @@ class TestJSONModelPlugin(unittest.TestCase):
     auth:
       identity:
         username: NSString *
-        password: NSString *
 '''
         y = yaml.load(doc)
 
         def foo(s):
             self.assertIn("NSString * username", s)
-            self.assertIn("NSString * password", s)
+            self.assertIn("keymap = auth.identity.username", s)
 
         yamljsonmodel.process_yaml_document(y, lambda x: foo(x))
