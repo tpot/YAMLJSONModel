@@ -7,18 +7,10 @@
 
 @interface {{ classname }} : JSONModel
 
-// Required properties
-
 {% if properties is defined -%}
 {% for property_name, value in properties.items() -%}
-@property (nonatomic) {{ value['type'] }} {{ property_name }};
-{% endfor -%}
-{% endif %}
-// Optional properties
-
-{% if optional_properties is defined -%}
-{% for property_name, value in optional_properties.items() -%}
-@property (nonatomic) {{ value['type'] }} <{{value['protocols']|join(',')}}> {{ property_name }};
+@property (nonatomic) {{ value['type'] }} {% if value['protocols'] is defined %}<{{value['protocols']|join(',')}}> {% endif %}{{ property_name }};
 {% endfor -%}
 {% endif %}
 @end
+

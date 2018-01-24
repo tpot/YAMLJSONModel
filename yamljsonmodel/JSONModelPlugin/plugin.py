@@ -14,39 +14,31 @@ def add_keymaps_for_properties(keypath, properties):
 def make_template_vars(obj):
 
     vars = {}
+    vars['properties'] = {}
 
     # Required properties
 
     for key in ['properties', 'optional_properties']:
 
-        optional = True
-        
-        if key == 'properties':
-            optional = False
-            
         if obj.has_key(key):
 
             for name in obj[key].keys():
 
-                vars[key] = {}
-
                 # String value is shortcut for simple property
                 
                 if type(obj[key][name]) == str:
-                    vars[key][name] = {'type': obj[key][name]}
-                else:
-                    vars[key][name] = obj[key][name]
+                    vars['properties'][name] = {'type': obj[key][name]}
 
                 # Hash value is nested properties
 
                 if type(obj[key][name]) == dict:
                     nested = add_keymaps_for_properties([name], obj[key][name])
-                    vars[key].update(nested)
+                    vars['properties'].update(nested)
                     
                 # Mark as optional
                 
-                if optional:
-                    vars[key][name]['protocols'] = ['Optional']
+                if key == 'optional_properties':
+                    vars['properties'][name]['protocols'] = ['Optional']
 
     return vars        
 
