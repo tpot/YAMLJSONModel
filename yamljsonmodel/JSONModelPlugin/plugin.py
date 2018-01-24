@@ -14,6 +14,7 @@ def add_keymaps_for_properties(keypath, properties):
 def make_template_vars(obj):
 
     vars = {}
+    vars['classname'] = obj['name']
     vars['properties'] = {}
 
     # Required properties

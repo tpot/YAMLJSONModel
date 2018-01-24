@@ -5,6 +5,21 @@ import yaml
 
 class TestJSONModelPlugin(unittest.TestCase):
 
+    def testClassname(self):
+        """Test JSONModel classname"""
+
+        doc = '''
+---
+- kind: JSONModel
+  name: test
+'''
+        y = yaml.load(doc)
+
+        def foo(s):
+            self.assertIn("@interface test : JSONModel", s)        
+        
+        yamljsonmodel.process_yaml_document(y, lambda x: foo(x))
+        
     def testProperties(self):
         """Test JSONModel properties"""
         
@@ -15,7 +30,6 @@ class TestJSONModelPlugin(unittest.TestCase):
   properties:
     foo: NSInteger
 '''
-
         y = yaml.load(doc)
     
         def foo(s):
