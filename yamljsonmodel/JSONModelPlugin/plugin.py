@@ -50,6 +50,9 @@ def make_template_vars(obj):
 
         if value.has_key('optional'):
             vars[key]['protocols'].append('Optional')
+
+        if value.has_key('collectionType'):
+            vars[key]['protocols'].append(value['collectionType'])
         
         if len(parents) > 0:
             vars[key]['keymap'] = '.'.join(parents) + '.' + key
