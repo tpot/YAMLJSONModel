@@ -75,4 +75,4 @@ def process_yaml_object(kind, obj):
     template_vars['properties'] = make_template_vars(obj)
     template_vars['classname'] = obj['name']
     
-    return 'model.h', template.render(**template_vars)
+    yield 'model.h', template.render(**template_vars)

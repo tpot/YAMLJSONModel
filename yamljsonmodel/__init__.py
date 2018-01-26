@@ -7,7 +7,7 @@ plugins = {
     for entry_point in pkg_resources.iter_entry_points('yamljsonmodel.plugins')
 }
 
-def process_yaml_document(yamldoc, callback):
+def process_yaml_document(yamldoc):
 
     for obj in yamldoc:
 
@@ -18,5 +18,4 @@ def process_yaml_document(yamldoc, callback):
 
         plugin = plugins[kind]
 
-        template_name, template_value  = plugin.process_yaml_object(kind, obj)
-        callback(template_name, template_value)
+        return plugin.process_yaml_object(kind, obj)
