@@ -13,11 +13,11 @@ class TestJSONModelPlugin(unittest.TestCase):
 - kind: JSONModel
   name: test
 '''
-        y = yaml.load(doc)
+        ydoc = yaml.load(doc)
 
-        for template_name, template_value in yamljsonmodel.process_yaml_document(y):
-            if template_name == 'model.h': 
-                self.assertIn("@interface test : JSONModel", template_value)
+        for tname, tvalue in yamljsonmodel.process_yaml_document(ydoc):
+            if tname == 'model.h': 
+                self.assertIn("@interface test : JSONModel", tvalue)
         
     def testProperties(self):
         """Test JSONModel properties"""
@@ -30,11 +30,11 @@ class TestJSONModelPlugin(unittest.TestCase):
     foo: 
       type: NSInteger
 '''
-        y = yaml.load(doc)
+        ydoc = yaml.load(doc)
     
-        for template_name, template_value in yamljsonmodel.process_yaml_document(y):
-            if template_name == 'model.h':
-                self.assertIn("NSInteger foo", template_value)            
+        for tname, tvalue in yamljsonmodel.process_yaml_document(ydoc):
+            if tname == 'model.h':
+                self.assertIn("NSInteger foo", tvalue)            
 
     def testOptionalProperties(self):
         """Test JSONModel optional properties"""
@@ -50,11 +50,11 @@ class TestJSONModelPlugin(unittest.TestCase):
       type: NSInteger
       optional: true
 '''
-        y = yaml.load(doc)
+        ydoc = yaml.load(doc)
 
-        for template_name, template_value in yamljsonmodel.process_yaml_document(y):
-            if template_name == 'model.h':
-                self.assertIn("NSInteger <Optional> bar", template_value)
+        for tname, tvalue in yamljsonmodel.process_yaml_document(ydoc):
+            if tname == 'model.h':
+                self.assertIn("NSInteger <Optional> bar", tvalue)
 
     def testOnlyOptionalProperties(self):
         """Test JSONModel with only optional properties"""
@@ -69,11 +69,11 @@ class TestJSONModelPlugin(unittest.TestCase):
       optional: true
 '''
 
-        y = yaml.load(doc)
+        ydoc = yaml.load(doc)
 
-        for template_name, template_value in yamljsonmodel.process_yaml_document(y):
-            if template_name == 'model.h':
-                self.assertIn("NSInteger <Optional> foo", template_value)
+        for tname, tvalue in yamljsonmodel.process_yaml_document(ydoc):
+            if tname == 'model.h':
+                self.assertIn("NSInteger <Optional> foo", tvalue)
 
     def testNestedProperties(self):
         """Test JSONModel nested properties behind a keymap"""
@@ -88,12 +88,12 @@ class TestJSONModelPlugin(unittest.TestCase):
         username: 
           type: NSString *
 '''
-        y = yaml.load(doc)
+        ydoc = yaml.load(doc)
 
-        for template_name, template_value in yamljsonmodel.process_yaml_document(y):
-            if template_name == 'model.h':
-                self.assertIn("NSString * username", template_value)
-                self.assertIn("keymap = auth.identity.username", template_value)
+        for tname, tvalue in yamljsonmodel.process_yaml_document(ydoc):
+            if tname == 'model.h':
+                self.assertIn("NSString * username", tvalue)
+                self.assertIn("keymap = auth.identity.username", tvalue)
 
     def testTypeShortcut(self):
         """Test JSONModel shortcut for simple property"""
@@ -105,11 +105,11 @@ class TestJSONModelPlugin(unittest.TestCase):
   properties:
     foo: NSString *
 '''
-        y = yaml.load(doc)
+        ydoc = yaml.load(doc)
 
-        for template_name, template_value in yamljsonmodel.process_yaml_document(y):
-            if template_name == 'model.h':
-                self.assertIn("NSString * foo", template_value)
+        for tname, tvalue in yamljsonmodel.process_yaml_document(ydoc):
+            if tname == 'model.h':
+                self.assertIn("NSString * foo", tvalue)
 
     def testKeyMapper(self):
         """Test JSONModel keymapper"""
@@ -124,8 +124,8 @@ class TestJSONModelPlugin(unittest.TestCase):
         type: NSString *
 '''
 
-        y = yaml.load(doc)
+        ydoc = yaml.load(doc)
 
-        for template_name, template_value in yamljsonmodel.process_yaml_document(y):
-            if template_name == 'model.c':
-                self.assertIn('@"bar": @"foo.bar",', template_value)
+        for tname, tvalue in yamljsonmodel.process_yaml_document(ydoc):
+            if tname == 'model.c':
+                self.assertIn('@"bar": @"foo.bar",', tvalue)
