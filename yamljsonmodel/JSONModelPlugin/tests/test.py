@@ -29,7 +29,8 @@ class TestJSONModelPlugin(unittest.TestCase):
 - kind: JSONModel
   name: test
   properties:
-    foo: NSInteger
+    foo: 
+      type: NSInteger
 '''
         y = yaml.load(doc)
     
@@ -47,9 +48,11 @@ class TestJSONModelPlugin(unittest.TestCase):
 - kind: JSONModel
   name: test
   properties:
-    foo: NSInteger
-  optional_properties:
-    bar: NSInteger
+    foo: 
+      type: NSInteger
+    bar: 
+      type: NSInteger
+      optional: true
 '''
         y = yaml.load(doc)
 
@@ -66,8 +69,10 @@ class TestJSONModelPlugin(unittest.TestCase):
 ---
 - kind: JSONModel
   name: test
-  optional_properties:
-    foo: NSInteger
+  properties:
+    foo: 
+      type: NSInteger
+      optional: true
 '''
 
         y = yaml.load(doc)
@@ -87,7 +92,8 @@ class TestJSONModelPlugin(unittest.TestCase):
   properties:
     auth:
       identity:
-        username: NSString *
+        username: 
+          type: NSString *
 '''
         y = yaml.load(doc)
 
