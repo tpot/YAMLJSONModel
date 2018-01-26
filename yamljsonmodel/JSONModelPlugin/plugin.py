@@ -40,26 +40,41 @@ def make_template_vars(obj):
     
     def fn(key, value, parents):
 
-        if vars.has_key(key):
-            raise Exception("Duplicate key, '%s'" % key)
-
-        vars[key] = {}
+        keyname = key
+        if value.has_key('_keyname'):
+            keyname = value['_keyname']
         
-        vars[key]['protocols'] = []
-        vars[key]['type'] = value['_type']
+        if vars.has_key(keyname):
+            raise Exception("Duplicate key, '%s'" % keyname)
+
+        vars[keyname] = {}
+        
+        vars[keyname]['protocols'] = []
+        vars[keyname]['type'] = value['_type']
 
         if value.has_key('_collectionType'):
-            vars[key]['collectionType'] = value['_collectionType']
+            vars[keyname]['collectionType'] = value['_collectionType']
 
         if value.has_key('_optional'):
-            vars[key]['protocols'].append('Optional')
+            vars[keyname]['protocols'].append('Optional')
 
         if value.has_key('_collectionType'):
-            vars[key]['protocols'].append(value['_collectionType'])
-        
-        if len(parents) > 0:
-            vars[key]['keymap'] = '.'.join(parents) + '.' + key
+            vars[keyname]['protocols'].append(value['_collectionType'])
 
+        # Create keymap
+            
+        keymap = []
+
+        if len(parents) > 0:
+            # Nested properties require a keymap
+            keymap = parents + [key]
+        elif keyname != key:
+            # We have used _keyname at top level
+            keymap = [key]
+            
+        if len(keymap) > 0:
+            vars[keyname]['keymap'] = '.'.join(keymap)
+            
     foreach_prop(props, fn)
 
     return vars
