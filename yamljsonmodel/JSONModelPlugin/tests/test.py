@@ -85,6 +85,7 @@ class TestJSONModelPlugin(unittest.TestCase):
 
     def testNestedProperties(self):
         """Test JSONModel nested properties behind a keymap"""
+        
         doc = '''
 ---
 - kind: JSONModel
@@ -101,5 +102,23 @@ class TestJSONModelPlugin(unittest.TestCase):
             if template_name == 'model.h':
                 self.assertIn("NSString * username", template_value)
                 self.assertIn("keymap = auth.identity.username", template_value)
+
+        yamljsonmodel.process_yaml_document(y, lambda x, y: foo(x, y))
+
+    def testTypeShortcut(self):
+        """Test JSONModel shortcut for simple property"""
+
+        doc = '''
+---
+- kind: JSONModel
+  name: test
+  properties:
+    foo: NSString *
+'''
+        y = yaml.load(doc)
+
+        def foo(template_name, template_value):
+            if template_name == 'model.h':
+                self.assertIn("NSString * foo", template_value)
 
         yamljsonmodel.process_yaml_document(y, lambda x, y: foo(x, y))

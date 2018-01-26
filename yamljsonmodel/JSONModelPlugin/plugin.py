@@ -21,10 +21,20 @@ def foreach_prop(props, cb, parents = []):
         
 def make_template_vars(obj):
 
+    # Drop out early if no properties
+    
     if not obj.has_key('properties'):
         return {}
 
     props = obj['properties']
+
+    # First pass - string values are shortcut names for types
+
+    for key, value in props.items():
+        if type(value) == str:
+            props[key] = {'type': value}
+
+    # Create template variables from properties
 
     vars = {}
     
