@@ -40,6 +40,9 @@ def make_template_vars(obj):
     
     def fn(key, value, parents):
 
+        if vars.has_key(key):
+            raise Exception("Duplicate key, '%s'" % key)
+
         vars[key] = {}
         
         vars[key]['protocols'] = []
