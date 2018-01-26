@@ -58,7 +58,7 @@ def make_template_vars(obj):
 
     return vars
 
-def process_yaml_object(kind, obj):
+def process_yaml_object(obj):
     """Generate JSONModel output from templates."""
 
     # Create template environment

@@ -18,4 +18,4 @@ def process_yaml_document(yamldoc):
 
         plugin = plugins[kind]
 
-        return plugin.process_yaml_object(kind, obj)
+        return plugin.process_yaml_object(obj)
