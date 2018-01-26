@@ -110,3 +110,22 @@ class TestJSONModelPlugin(unittest.TestCase):
         for template_name, template_value in yamljsonmodel.process_yaml_document(y):
             if template_name == 'model.h':
                 self.assertIn("NSString * foo", template_value)
+
+    def testKeyMapper(self):
+        """Test JSONModel keymapper"""
+
+        doc = '''
+---
+- kind: JSONModel
+  name: test
+  properties:
+    foo: 
+      bar: 
+        type: NSString *
+'''
+
+        y = yaml.load(doc)
+
+        for template_name, template_value in yamljsonmodel.process_yaml_document(y):
+            if template_name == 'model.c':
+                self.assertIn('@"bar": @"foo.bar",', template_value)

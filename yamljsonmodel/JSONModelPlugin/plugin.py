@@ -67,12 +67,14 @@ def process_yaml_object(kind, obj):
         loader = PackageLoader('yamljsonmodel.JSONModelPlugin', 'templates')
     )
 
-    # Generate model.h
+    # Generate model templates
 
-    template = env.get_template('model.h')
+    for name in ['model.h', 'model.c']:
+        
+        template = env.get_template(name)
 
-    template_vars = {}
-    template_vars['properties'] = make_template_vars(obj)
-    template_vars['classname'] = obj['name']
+        template_vars = {}
+        template_vars['properties'] = make_template_vars(obj)
+        template_vars['classname'] = obj['name']
     
-    yield 'model.h', template.render(**template_vars)
+        yield name, template.render(**template_vars)
