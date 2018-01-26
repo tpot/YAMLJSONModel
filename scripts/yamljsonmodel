@@ -15,10 +15,8 @@ if __name__ == '__main__':
             
             # Parse YAML and send objects in the document to appropriate plugin
 
-            y = yaml.load(stream)
+            ydoc = yaml.load(stream)
 
-            def handle(template_name, template_value):
-                print('---\n%s\n---' % template_name)
-                print(template_value)
-            
-            yamljsonmodel.process_yaml_document(y, handle)
+            for tname, tvalue in yamljsonmodel.process_yaml_document(ydoc):
+                print('---\n%s\n---' % tname)
+                print(tvalue)
