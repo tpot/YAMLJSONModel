@@ -21,6 +21,11 @@ def foreach_prop(props, cb, parents = []):
         
 def make_template_vars(obj):
 
+    if not obj.has_key('properties'):
+        return {}
+
+    props = obj['properties']
+
     vars = {}
     
     def fn(key, value, parents):
@@ -39,8 +44,7 @@ def make_template_vars(obj):
         if len(parents) > 0:
             vars[key]['keymap'] = '.'.join(parents) + '.' + key
 
-    if obj.has_key('properties'):
-        foreach_prop(obj['properties'], fn)
+    foreach_prop(props, fn)
 
     return vars
 
