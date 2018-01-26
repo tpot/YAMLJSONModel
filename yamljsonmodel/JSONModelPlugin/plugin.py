@@ -32,7 +32,7 @@ def make_template_vars(obj):
 
     for key, value in props.items():
         if type(value) == str:
-            props[key] = {'type': value}
+            props[key] = {'_type': value}
 
     # Create template variables from properties
 
@@ -46,16 +46,16 @@ def make_template_vars(obj):
         vars[key] = {}
         
         vars[key]['protocols'] = []
-        vars[key]['type'] = value['type']
+        vars[key]['type'] = value['_type']
 
-        if value.has_key('collectionType'):
-            vars[key]['collectionType'] = value['collectionType']
+        if value.has_key('_collectionType'):
+            vars[key]['collectionType'] = value['_collectionType']
 
-        if value.has_key('optional'):
+        if value.has_key('_optional'):
             vars[key]['protocols'].append('Optional')
 
-        if value.has_key('collectionType'):
-            vars[key]['protocols'].append(value['collectionType'])
+        if value.has_key('_collectionType'):
+            vars[key]['protocols'].append(value['_collectionType'])
         
         if len(parents) > 0:
             vars[key]['keymap'] = '.'.join(parents) + '.' + key
