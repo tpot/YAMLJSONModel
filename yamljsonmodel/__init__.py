@@ -18,5 +18,5 @@ def process_yaml_document(yamldoc, callback):
 
         plugin = plugins[kind]
 
-        result = plugin.process_yaml_object(kind, obj)
-        callback(result)
+        template_name, template_value  = plugin.process_yaml_object(kind, obj)
+        callback(template_name, template_value)

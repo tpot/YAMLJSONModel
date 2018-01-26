@@ -17,4 +17,8 @@ if __name__ == '__main__':
 
             y = yaml.load(stream)
 
-            yamljsonmodel.process_yaml_document(y, lambda x: sys.stdout.write(x))
+            def handle(template_name, template_value):
+                print('---\n%s\n---' % template_name)
+                print(template_value)
+            
+            yamljsonmodel.process_yaml_document(y, handle)
